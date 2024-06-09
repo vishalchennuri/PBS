@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body{
+            background-color: rgb(245, 245, 245);
+        }
+        .fs-4 {
+            color: black;
+        }
+        .nav-link {
+            color: black;
+        }
+
+        #header {
+            background-color: #fff;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            background-color: white; /* Optional: Add background color */
+            z-index: 1000; /* Ensure it's above other content */
+        }
+        .info-section {
+            display: none;
+        }
+        .category-card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa; /* Light Gray */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .category-card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .info-section {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            margin-top: 20px;
+            background-color: #ffffff; /* Change to white background */
+        }
+        .Profile-info {
+            display: block; /* Ensure dashboard info is initially visible */
+        }
+         .profile-card, .Companies-card, .Job-Offers-card, .result-card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: rgb(204, 229, 255); /* Light Blue */
+            margin-bottom: 20px;
+        }
+        .info-section ul {
+            margin-top: 15px; /* Increase the top margin */
+            margin-bottom: 0; /* Reset default margin for UL */
+            padding-left: 20px; /* Indent list items */
+        }
+        .info-section ul li {
+            margin-bottom: 8px; /* Add spacing between list items */
+        }
+        .info-section h4 {
+            font-weight: bold; /* Make section headings bold */
+            margin-bottom: 15px; /* Add spacing below headings */
+            font-size: 20px; /* Increase font size */
+        }
+        .info-section p {
+            font-size: 18px; /* Increase font size */
+            line-height: 1.5; /* Add spacing between lines */
+        }
+
+        /* CSS for the interview details box */
+        .interview-details {
+            border-collapse: collapse;
+        }
+        .row-header {
+            display: flex;
+            background-color: #ccc; /* Same color for all rows */
+        }
+        .column {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+        }
+        .data-row {
+            display: flex;
+            border-bottom: 1px solid black; /* Border between each row */
+        }
+        /* CSS for bullet points */
+        .bullet-points ul {
+            list-style-type: none;
+        }
+        .bullet-points ul li:before {
+            content: "\2192"; /* Unicode arrow character */
+            margin-right: 5px;
+        }
+        /* Add this CSS to your stylesheet */
+        .data-row:nth-child(even) {
+            background-color: #f2f2f2; /* Light gray background for even rows */
+        }
+        .data-row:nth-child(odd) {
+            background-color: #ffffff; /* White background for odd rows */
+        }
+        .info-section a {
+            text-decoration: none; /* Removes underline */
+        }
+        .info-section a:hover {
+            text-decoration: underline; /* Adds underline on hover */
+        }
+
+        .profile-image-container {
+            width: 150px; /* Adjust this value as needed */
+            height: 150px; /* Adjust this value as needed */
+            overflow: hidden;
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+
+.profile-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333; /* Dark color for headings */
+}
+
+.company-list {
+  float: left;
+  width: 40%;
+  padding-right: 20px;
+}
+
+.company-list h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333; /* Dark color for headings */
+}
+
+.company-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.company-list li {
+  margin-bottom: 15px;
+}
+
+.company-list a {
+  text-decoration: none;
+  color: #555; /* Slightly darker color for links */
+  font-size: 20px;
+  font-weight: bold;
+  transition: color 0.3s ease; /* Smooth transition for link color change */
+}
+
+.company-list a:hover {
+  color: #007bff; /* Hover color for links */
+}
+
+.companies-details { /* Changed from .company-details */
+  float: left;
+  width: 60%;
+}
+
+.companies-details h2 { /* Changed from .company-details h2 */
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333; /* Dark color for headings */
+}
+
+.companies-details p { /* Changed from .company-details p */
+  margin-bottom: 10px;
+  color: #555; /* Slightly darker color for text */
+}
+
+.apply-button {
+  background-color: #007bff;
+  color: #fff; /* White color for button text */
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.apply-button:hover {
+  background-color: #0056b3;
+}
+
+    .job-offers-body {
+      font-family: Arial, sans-serif; /* Use a common sans-serif font for readability */
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4; /* Light background color for better readability */
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff; /* White background for content area */
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow for container */
+    }
+    </style>
+</head>
+
+<body>
+    <section id="header">
+        <div class="container-fluid">
+            <header class="d-flex flex-wrap justify-content-between align-items-center py-3 mb-4 border-bottom">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+                    <img src="./vnrr.jpg" alt="VNR Logo" class="logo me-3" height="120" width="120">
+                    <span class="fs-4 fw-bold">VNR Vignana Jyothi Institute of Engineering and Technology</span>
+                </a>
+    
+                <ul class="nav nav-pills align-items-center">
+                    <li class="nav-item mx-3">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home.html">Go Back</a>
+                    </li>
+
+                    <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 mx-4 link-body-emphasis text-decoration-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+                            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
+                          </svg>
+                    </a>
+
+                    <div class="dropdown text-end">
+                        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                          <img src="/vnrr.jpg" alt="mdo" width="40" height="40" class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small">
+                          <li><a class="dropdown-item" href="#">Settings</a></li>
+                          <li><a class="dropdown-item" href="#">Profile</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="/Home.html">Sign out</a></li>
+                        </ul>
+                      </div>
+                </ul>
+            </header>
+        </div>
+    </section>
+
+    <section id="categories" class="container mt-5 pb-5">
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <div class="category-card profile-card" data-category="profile">
+                    <h4>Profile</h4>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="category-card Companies-card" data-category="Companies">
+                    <h4>Onboard Companies</h4>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="category-card Job-Offers-card" data-category="Job-Offers">
+                    <h4>Job Offers</h4>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="category-card result-card" data-category="result">
+                    <h4>Result</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row second-row-bg"> <!-- Apply the background color to the second row -->
+                <div class="col">
+                    <div class="info-section" id="profile-info">
+                        <div class="text-center mb-4">
+                            <!-- Profile Image with circular clipping -->
+                            <div class="profile-image-container">
+                                <img src="./user.jpg" alt="Profile Image" class="profile-image">
+                            </div>
+                        </div>
+                        <div class="text-center mb-4">
+                            <!-- Profile Heading -->
+                            <h4>Profile</h4>
+                        </div>
+                        <!-- Profile Sections -->
+                        <div class="profile-sections">
+                            <h5>Name</h5>
+                            <p>John Doe</p>
+                            <h5>CGPA</h5>
+                            <p>3.8</p>
+                            <h5>Skills</h5>
+                            <ul>
+                                <li>HTML</li>
+                                <li>CSS</li>
+                                <li>JavaScript</li>
+                            </ul>
+                            <h5>Achievements</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et ex non eros lacinia tempus.</p>
+                            <h5>Projects</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et ex non eros lacinia tempus.</p>
+                        </div>
+                        <div class="text-center mt-4 pt-4">
+                            <!-- Edit Profile Button -->
+                            <button class="btn btn-primary" id="editProfileBtn">Edit Profile</button>
+                        </div>
+                    </div>
+                </div>
+                    
+                    
+                    <div class="info-section Companies-info" id="Companies-info">
+                        <h4>Companies Information</h4>
+                        <div class="row">
+                            <div class="col-md-4" id="companyList">
+                                <ul class="list-group">
+                                    <li class="list-group-item company-item" data-company="Googgle">Googgle</li>
+                                    <li class="list-group-item company-item" data-company="Microsoft">Microsoft</li>
+                                    <li class="list-group-item company-item" data-company="Facebook">Facebook</li>
+                                    <li class="list-group-item company-item" data-company="Deloite">Deloite</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-8" id="companyDetails">
+                                <div class="company-details" id="detailsPlaceholder">
+                                    Select a company to see details.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-section" id="result-info">
+                        <h4>Campus Interview Info</h4>
+                        
+                        <ul>
+                            <li>Listed Below are The Companies For Which Your Name Has Been Shortlisted For The campus Interview. </li>
+                            <li>Please Indicate Your Preference By Clicking The Check Box</li>
+                        </ul>
+                        
+                        <div class="campus-information">
+                            <!-- Campus Information Aligned Left -->
+                        </div>
+                        
+                        <div class="bullet-points mb-5">
+                            <!-- Bullet points with arrow mark -->
+                            <ul>
+                                <li>Note: You Can Select A Maximum Of 4 Employers from The List.</li>
+                                <!-- Add more bullet points as needed -->
+                            </ul>
+                        </div>
+                        
+                        <div class="interview-details">
+                            <!-- Box-like pattern with 5 rows and 9 columns -->
+                            <div class="row-header">
+                                <div class="column">Employer Name</div>
+                                <div class="column">Interview Type</div>
+                                <div class="column">Interview Date</div>
+                                <div class="column">Personal Interview</div>
+                                <div class="column">Int Info</div>
+                                <div class="column">CTC Info</div>
+                                <div class="column">PPT</div>
+                                <div class="column">Shortlisting Round</div>
+                                <div class="column">Select</div>
+                            </div>
+                    
+                            <!-- Data Rows -->
+                            <div class="data-row">
+                                <div class="column"><a href="#">Facebook<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column">Online</div>
+                                <div class="column">2024-03-25</div>
+                                <div class="column">Personal Interview</div>
+                                <div class="column"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column"><a><svg xmlns="http://www.w3.org/2000/svg" width="25" height="22" fill="currentColor" class="bi bi-cloud-arrow-down-fill" viewBox="0 0 16 16">
+                                    <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2m2.354 6.854-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5a.5.5 0 0 1 1 0v3.793l1.146-1.147a.5.5 0 0 1 .708.708"/>
+                                  </svg></a></div>
+                                <div class="column">First</div>
+                                <div class="column"><input type="checkbox"></div>
+                            </div>
+                    
+                            <!-- Additional Data Rows -->
+                            <div class="data-row">
+                                <div class="column"><a href="#">Googgle<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column">Offline</div>
+                                <div class="column">2024-04-10</div>
+                                <div class="column">Psychometric Test</div>
+                                <div class="column"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column"><a><svg xmlns="http://www.w3.org/2000/svg" width="25" height="22" fill="currentColor" class="bi bi-cloud-arrow-down-fill" viewBox="0 0 16 16">
+                                    <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2m2.354 6.854-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5a.5.5 0 0 1 1 0v3.793l1.146-1.147a.5.5 0 0 1 .708.708"/>
+                                  </svg></a></div>
+                                <div class="column">Second</div>
+                                <div class="column"><input type="checkbox"></div>
+                            </div>
+                    
+                            <div class="data-row">
+                                <div class="column"><a href="#">Microsoft<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column">Online</div>
+                                <div class="column">2024-04-15</div>
+                                <div class="column">Personal Interview</div>
+                                <div class="column"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column"><a><svg xmlns="http://www.w3.org/2000/svg" width="25" height="22" fill="currentColor" class="bi bi-cloud-arrow-down-fill" viewBox="0 0 16 16">
+                                    <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2m2.354 6.854-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5a.5.5 0 0 1 1 0v3.793l1.146-1.147a.5.5 0 0 1 .708.708"/>
+                                  </svg></a></div>
+                                <div class="column">Third</div>
+                                <div class="column"><input type="checkbox"></div>
+                            </div>
+
+                            <div class="data-row">
+                                <div class="column"><a href="#">J P Morgan<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column">Online</div>
+                                <div class="column">2024-04-15</div>
+                                <div class="column">Personal Interview</div>
+                                <div class="column"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column"><a><svg xmlns="http://www.w3.org/2000/svg" width="25" height="22" fill="currentColor" class="bi bi-cloud-arrow-down-fill" viewBox="0 0 16 16">
+                                    <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2m2.354 6.854-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5a.5.5 0 0 1 1 0v3.793l1.146-1.147a.5.5 0 0 1 .708.708"/>
+                                  </svg></a></div>
+                                <div class="column">Third</div>
+                                <div class="column"><input type="checkbox"></div>
+                            </div>
+
+                            <div class="data-row">
+                                <div class="column"><a href="#">Deloite<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column">Online</div>
+                                <div class="column">2024-04-15</div>
+                                <div class="column">Group Discussion</div>
+                                <div class="column"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                                  </svg></a></div>
+                                <div class="column"><a><svg xmlns="http://www.w3.org/2000/svg" width="25" height="22" fill="currentColor" class="bi bi-cloud-arrow-down-fill" viewBox="0 0 16 16">
+                                    <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2m2.354 6.854-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5a.5.5 0 0 1 1 0v3.793l1.146-1.147a.5.5 0 0 1 .708.708"/>
+                                  </svg></a></div>
+                                <div class="column">Second</div>
+                                <div class="column"><input type="checkbox"></div>
+                            </div>
+                            
+                            <!-- Add more data rows as needed -->
+                        </div>
+                    </div>                 
+                    <div class="info-section" id="Job-Offers-info">
+                        <h2>Companies List</h2> <!-- Added heading for the company list -->
+                        <div class="company-list">
+                          <ul id="company-list">
+                            <li><a href="#" onclick="showDetails(0)">Google</a></li>
+                            <li><a href="#" onclick="showDetails(1)">Microsoft</a></li>
+                            <li><a href="#" onclick="showDetails(2)">Facebook</a></li>
+                            <li><a href="#" onclick="showDetails(3)">Deloitte</a></li>
+                          </ul>
+                        </div>
+                        <div class="companies-details" id="company-details"> <!-- Changed class name to .companies-details -->
+                          <!-- Company details will be displayed here -->
+                          Select a company to see details.
+                        </div>
+                      </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const categories = document.querySelectorAll('.category-card');
+            const infoSections = document.querySelectorAll('.info-section');
+
+            categories.forEach(category => {
+                category.addEventListener('click', function () {
+                    const categoryType = this.getAttribute('data-category');
+                    infoSections.forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    document.getElementById(categoryType + '-info').style.display = 'block';
+                    document.getElementById('dashboard-info').style.display = categoryType === 'dashboard' ? 'block' : 'none';
+                });
+            });
+        });
+    </script>
+    
+     <script>
+        // Add an event listener to the button
+        document.getElementById("editProfileBtn").addEventListener("click", function() {
+            // Redirect to profile.html when the button is clicked
+            window.location.href = "profile.html";
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const companies = document.querySelectorAll('.company-item');
+            const detailsPlaceholder = document.getElementById('detailsPlaceholder');
+
+            const recruitmentDetails = {
+                'Googgle': {
+                    '2023': {
+                        'recruitmentDetails': 'Recruitment details for 2023 of Googgle',
+                        'totalStudentsHired': 20,
+                        'studentsInfo': [
+                            { 'name': 'John Doe', 'cgpa': 9.8, 'skills': ['HTML', 'CSS', 'JavaScript'], 'contact': { 'linkedin': 'linkedin.com/in/johndoe', 'gmail': 'johndoe@gmail.com' } },
+                            { 'name': 'Jane Smith', 'cgpa': 8.9, 'skills': ['Python', 'Java', 'SQL'], 'contact': { 'linkedin': 'linkedin.com/in/janesmith', 'gmail': 'janesmith@gmail.com' } }
+                        ]
+                    },
+                    '2022': {
+                        'recruitmentDetails': 'Recruitment details for 2022 of Googgle',
+                        'totalStudentsHired': 15,
+                        'studentsInfo': [
+                            { 'name': 'Alice Johnson', 'cgpa': 8.7, 'skills': ['HTML', 'CSS', 'React'], 'contact': { 'linkedin': 'linkedin.com/in/johndoe', 'gmail': 'johndoe@gmail.com' } },
+                            { 'name': 'Bob Williams', 'cgpa': 9.6, 'skills': ['Java', 'C++', 'Node.js'], 'contact': { 'linkedin': 'linkedin.com/in/johndoe', 'gmail': 'johndoe@gmail.com' } }
+                        ]
+                    },
+                    '2021': {
+                        'recruitmentDetails': 'Recruitment details for 2021 of Googgle',
+                        'totalStudentsHired': 15,
+                        'studentsInfo': [
+                            { 'name': 'Jhon', 'cgpa': 9.7, 'skills': ['HTML', 'CSS', 'React'], 'contact': { 'linkedin': 'linkedin.com/in/johndoe', 'gmail': 'johndoe@gmail.com' } },
+                            { 'name': 'Bob', 'cgpa': 7.6, 'skills': ['Java', 'C++', 'Node.js'], 'contact': { 'linkedin': 'linkedin.com/in/johndoe', 'gmail': 'johndoe@gmail.com' } }
+                        ]
+                    },
+                    
+                    // More recruitment details for Googgle...
+                },
+                'Microsoft': {
+                    '2023': {
+                        'recruitmentDetails': 'Recruitment details for 2023 of Microsoft',
+                        'totalStudentsHired': 30,
+                        'studentsInfo': [
+                            { 'name': 'John Doe', 'cgpa': 9.3, 'skills': ['HTML', 'CSS', 'JavaScript'], 'contact': { 'linkedin': 'linkedin.com/in/johndoe', 'gmail': 'johndoe@gmail.com' } },
+                            { 'name': 'Jane Smith', 'cgpa': 9.8, 'skills': ['Python', 'Java', 'SQL'], 'contact': { 'linkedin': 'linkedin.com/in/janesmith', 'gmail': 'janesmith@gmail.com' } }
+                        ]
+                    },
+                    '2022': {
+                        'recruitmentDetails': 'Recruitment details for 2022 of Microsoft',
+                        'totalStudentsHired': 25,
+                        'studentsInfo': [
+                            { 'name': 'John Doe', 'cgpa': 9.3, 'skills': ['HTML', 'CSS', 'JavaScript'], 'contact': { 'linkedin': 'linkedin.com/in/johndoe', 'gmail': 'johndoe@gmail.com' } },
+                            { 'name': 'Jane Smith', 'cgpa': 9.8, 'skills': ['Python', 'Java', 'SQL'], 'contact': { 'linkedin': 'linkedin.com/in/janesmith', 'gmail': 'janesmith@gmail.com' } }
+                        ]
+                    },
+                    '2021': {
+                        'recruitmentDetails': 'Recruitment details for 2021 of Microsoft',
+                        'totalStudentsHired': 35,
+                        'studentsInfo': [
+                            { 'name': 'John Doe', 'cgpa': 9.3, 'skills': ['HTML', 'CSS', 'JavaScript'], 'contact': { 'linkedin': 'linkedin.com/in/johndoe', 'gmail': 'johndoe@gmail.com' } },
+                            { 'name': 'Jane Smith', 'cgpa': 9.8, 'skills': ['Python', 'Java', 'SQL'], 'contact': { 'linkedin': 'linkedin.com/in/janesmith', 'gmail': 'janesmith@gmail.com' } }
+                        ]
+                    },
+                    // More recruitment details for Microsoft...
+                },
+                'Facebook': {
+                    '2023': {
+                        'recruitmentDetails': 'Recruitment details for 2023 of Facebook',
+                        'totalStudentsHired': 20,
+                        'studentsInfo': [
+                            { 'name': 'John Doe', 'cgpa': 8.8, 'skills': ['HTML', 'CSS', 'JavaScript'], 'contact': { 'linkedin': 'linkedin.com/in/johndoe', 'gmail': 'johndoe@gmail.com' } },
+                            { 'name': 'Jane Smith', 'cgpa': 7.9, 'skills': ['Python', 'Java', 'SQL'], 'contact': { 'linkedin': 'linkedin.com/in/janesmith', 'gmail': 'janesmith@gmail.com' } }
+                        ]
+                    },
+                    '2022': {
+                        'recruitmentDetails': 'Recruitment details for 2022 of Facebook',
+                        'totalStudentsHired': 25,
+                        'studentsInfo': [
+                            { 'name': 'John Doe', 'cgpa': 8.8, 'skills': ['HTML', 'CSS', 'JavaScript'], 'contact': { 'linkedin': 'linkedin.com/in/johndoe', 'gmail': 'johndoe@gmail.com' } },
+                            { 'name': 'Jane Smith', 'cgpa': 7.2, 'skills': ['Python', 'Java', 'SQL'], 'contact': { 'linkedin': 'linkedin.com/in/janesmith', 'gmail': 'janesmith@gmail.com' } }
+                        ]
+                    },
+                    '2021': {
+                        'recruitmentDetails': 'Recruitment details for 2021 of Facebook',
+                        'totalStudentsHired': 10,
+                        'studentsInfo': [
+                            { 'name': 'John Doe', 'cgpa': 8.8, 'skills': ['HTML', 'CSS', 'JavaScript'], 'contact': { 'linkedin': 'linkedin.com/in/johndoe', 'gmail': 'johndoe@gmail.com' } },
+                            { 'name': 'Jane Smith', 'cgpa': 9.0, 'skills': ['Python', 'Java', 'SQL'], 'contact': { 'linkedin': 'linkedin.com/in/janesmith', 'gmail': 'janesmith@gmail.com' } }
+                        ]
+                    },
+                    // More recruitment details for Facebook...
+                },
+                'Deloite': {
+                    '2023': {
+                        'recruitmentDetails': 'Recruitment details for 2023 of Deloite',
+                        'totalStudentsHired': 42,
+                        'studentsInfo': [
+                            { 'name': 'John Doe', 'cgpa': 8.9, 'skills': ['HTML', 'CSS', 'JavaScript'], 'contact': { 'linkedin': 'linkedin.com/in/johndoe', 'gmail': 'johndoe@gmail.com' } },
+                            { 'name': 'Jane Smith', 'cgpa': 9.8, 'skills': ['Python', 'Java', 'SQL'], 'contact': { 'linkedin': 'linkedin.com/in/janesmith', 'gmail': 'janesmith@gmail.com' } }
+                        ]
+                    },
+                    '2022': {
+                        'recruitmentDetails': 'Recruitment details for 2022 of Deloite',
+                        'totalStudentsHired': 30,
+                        'studentsInfo': [
+                            { 'name': 'John Doe', 'cgpa': 7.9, 'skills': ['HTML', 'CSS', 'JavaScript'], 'contact': { 'linkedin': 'linkedin.com/in/johndoe', 'gmail': 'johndoe@gmail.com' } },
+                            { 'name': 'Jane Smith', 'cgpa': 8.9, 'skills': ['Python', 'Java', 'SQL'], 'contact': { 'linkedin': 'linkedin.com/in/janesmith', 'gmail': 'janesmith@gmail.com' } }
+                        ]
+                    },
+                    '2021': {
+                        'recruitmentDetails': 'Recruitment details for 2021 of Deloite',
+                        'totalStudentsHired': 20,
+                        'studentsInfo': [
+                            { 'name': 'John Doe', 'cgpa': 7.9, 'skills': ['HTML', 'CSS', 'JavaScript'], 'contact': { 'linkedin': 'linkedin.com/in/johndoe', 'gmail': 'johndoe@gmail.com' } },
+                            { 'name': 'Jane Smith', 'cgpa': 8.9, 'skills': ['Python', 'Java', 'SQL'], 'contact': { 'linkedin': 'linkedin.com/in/janesmith', 'gmail': 'janesmith@gmail.com' } }
+                        ]
+                    },
+                    
+                    // More recruitment details for Deloite...
+                },
+                // Similar data for other companies...
+            };
+
+            companies.forEach(company => {
+                company.addEventListener('click', function () {
+                    const companyName = this.getAttribute('data-company');
+
+                    let detailsHTML = `<h5>${companyName}</h5>`;
+                    detailsHTML += '<div class="row">';
+                    for (const year in recruitmentDetails[companyName]) {
+                        detailsHTML += `<div class="col-md-4">
+                                            <div class="card mb-3">
+                                                <div class="card-body">
+                                                    <h6 class="card-title">${year}</h6>
+                                                    <p class="card-text">Recruitment Details: ${recruitmentDetails[companyName][year]['recruitmentDetails']}</p>
+                                                    <p class="card-text">Total Students Hired: ${recruitmentDetails[companyName][year]['totalStudentsHired']}</p>
+                                                    <ul class="list-group">`;
+                        recruitmentDetails[companyName][year]['studentsInfo'].forEach(student => {
+                            detailsHTML += `<li class="list-group-item">Name: ${student['name']}<br>
+                                                                CGPA: ${student['cgpa']}<br>
+                                                                Skills: ${student['skills'].join(', ')}<br>
+                                                                Contact: <a href="${student['contact']['linkedin']}">LinkedIn</a>, <a href="mailto:${student['contact']['gmail']}">Email</a>
+                                                            </li>`;
+                        });
+                        detailsHTML += `</ul></div></div></div>`;
+                    }
+                    detailsHTML += '</div>';
+                    detailsPlaceholder.innerHTML = detailsHTML;
+                });
+            });
+        });
+    </script>
+<script>
+    // Define job offers data
+    const jobOffers = [
+      {
+        company: "Google",
+        role: "Software Engineer",
+        description: "Google is looking for a highly skilled Software Engineer to join our team. As a Software Engineer at Google, you will be responsible for designing and developing innovative software solutions to complex problems. You should have strong programming skills in languages like Python, Java, or C++, along with experience in algorithms and data structures.",
+        skills: "Proficiency in Python, Java, or C++, experience with algorithms and data structures.",
+        cgpa: "CGPA: Minimum 3.5",
+        salary: "$120,000 per year"
+      },
+      {
+        company: "Microsoft",
+        role: "Data Scientist",
+        description: "Microsoft is seeking a talented Data Scientist to contribute to our data analytics projects. As a Data Scientist at Microsoft, you will work on analyzing large datasets, building predictive models, and providing insights to drive business decisions. Proficiency in statistical analysis, machine learning techniques, and programming languages like R or Python is required.",
+        skills: "Proficiency in statistical analysis, machine learning techniques, R or Python programming.",
+        cgpa: "CGPA: Minimum 3.7",
+        salary: "$110,000 per year"
+      },
+      {
+        company: "Facebook",
+        role: "Product Manager",
+        description: "Facebook is hiring a Product Manager to lead product development and strategy initiatives. As a Product Manager at Facebook, you will work closely with cross-functional teams to define product requirements, prioritize features, and drive product launches. Strong communication skills, analytical thinking, and a customer-centric approach are essential for this role.",
+        skills: "Strong communication, analytical thinking, product management experience.",
+        cgpa: "CGPA: Minimum 3.6",
+        salary: "$130,000 per year"
+      },
+      {
+        company: "Deloitte",
+        role: "Financial Analyst",
+        description: "Deloitte is seeking a Financial Analyst to provide financial advisory and consulting services to our clients. As a Financial Analyst at Deloitte, you will analyze financial data, prepare reports, and assist in financial planning and decision-making processes. Strong analytical skills, attention to detail, and knowledge of financial principles are required for this role.",
+        skills: "Strong analytical skills, attention to detail, knowledge of financial principles.",
+        cgpa: "CGPA: Minimum 3.4",
+        salary: "$100,000 per year"
+      }
+    ];
+
+    // Function to display details of selected company
+    function showDetails(index) {
+      const company = jobOffers[index];
+      const detailsElement = document.getElementById("company-details");
+      detailsElement.innerHTML = `
+        <h2>${company.company}</h2>
+        <p><strong>Job Role:</strong> ${company.role}</p>
+        <p><strong>Description:</strong> ${company.description}</p>
+        <p><strong>Skills:</strong> ${company.skills}</p>
+        <p><strong>Criteria:</strong><br> ${company.cgpa}</p>
+        <p><strong>Salary:</strong> ${company.salary}</p>
+        <button class="apply-button" onclick="applyNow()">Apply Now</button>
+      `;
+    }
+
+    // Function to handle Apply Now button click
+    function applyNow() {
+      // You can add your logic for applying here
+      alert("You have applied for this job!");
+    }
+  </script>
+
+
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1, h2 {
+        text-align: center;
+        color: #333;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+    input[type="text"], textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    textarea {
+        height: 100px;
+    }
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    .profile-image {
+        text-align: center;
+        margin-bottom: 20px;
+        width: 150px; /* Adjust this value as needed */
+        height: 150px; /* Adjust this value as needed */
+        overflow: hidden;
+        border-radius: 50%;
+        margin: 0 auto;
+    }
+    .profile-image img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-image">
+            <img src="./user.jpg" alt="Profile Image">
+        </div>
+        <h1>Profile</h1>
+        <form id="resumeForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="skills">Skills:</label>
+                <textarea id="skills" name="skills" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="experience">Experience:</label>
+                <textarea id="experience" name="experience" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="education">Education:</label>
+                <textarea id="education" name="education" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="additional">Additional Information:</label>
+                <textarea id="additional" name="additional"></textarea>
+            </div>
+            <button type="button" id="saveButton">Save</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('saveButton').addEventListener('click', function() {
+            var resumeData = {
+                name: document.getElementById('name').value,
+                skills: document.getElementById('skills').value,
+                experience: document.getElementById('experience').value,
+                education: document.getElementById('education').value,
+                additional: document.getElementById('additional').value
+            };
+
+            // Here you can implement saving logic, such as storing in local storage or sending to server
+            console.log('Resume Data:', resumeData);
+            alert('Your information has been saved!');
+        });
+    </script>
+</body>
+</html>

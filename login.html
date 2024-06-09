@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        .login-box {
+            max-width: 400px;
+            margin: auto;
+            border: 1px solid #ced4da; /* light border */
+            border-radius: 10px; /* rounded corners */
+            padding: 20px;
+            margin-top: 50px; /* adjust as needed for vertical centering */
+        }
+    </style>
+</head>
+<body class="text-center">
+    <main class="login-box">
+        <form class="form-signin">
+            <img class="mb-4" src="./vnr.jpg" alt="" width="72" height="80">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+            <div class="form-floating">
+                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <div class="_6ltj mt-3">
+                <a href="https://www.facebook.com/recover/initiate/?privacy_mutation_token=eyJ0eXBlIjowLCJjcmVhdGlvbl90aW1lIjoxNzExMTc5NDM3LCJjYWxsc2l0ZV9pZCI6MzgxMjI5MDc5NTc1OTQ2fQ%3D%3D&amp;ars=facebook_login">Forgotten password?</a>
+            </div>
+            
+        </form>
+    </main>
+    <script>
+        document.getElementById('signupButton').addEventListener('click', function() {
+            window.location.href = 'signup.html';
+        });
+    </script>
+</body>
+</html>
